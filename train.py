@@ -2,14 +2,15 @@ from utils.utils import *
 from utils import engine
 from config.config import *
 from dataset.dataloader import get_dataloader
+from dataset.dataset import AttributesDataset
 from model.FashionMultilableModel import FashionMultilableModel as FSM
 from torch import optim
-from torch.utils.tensorboard import summary
+from torch.utils.tensorboard import SummaryWriter, summary
 import argparse
 
 
 def main(args):
-    attr = args.attributes_file
+    attr = AttributesDataset(args.attributes_file)
     train_dl, val_dl, _ = get_dataloader(attr)
     model = FSM(n_color_classes=attr.num_colors,
                 n_gender_classes=attr.num_genders,
@@ -22,7 +23,7 @@ def main(args):
     savedir = os.path.join('./checkpoints/', get_current_time())
     os.makedirs(logdir, exist_ok=True)
     os.makedirs(savedir, exist_ok=True)
-    logger = summary(logdir)
+    logger = SummaryWriter(logdir)
 
     # VISUALIZE
     # visualize_grid(model, val_dl, attr, DEVICE, show_cn_matrices=False, show_images=True, checkpoint=None, show_gt=True)

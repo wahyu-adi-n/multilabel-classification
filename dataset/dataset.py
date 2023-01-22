@@ -61,7 +61,7 @@ class FashionDataset(Dataset):
                     self.attr.gender_name_to_id[row['gender']]
                 )
                 self.article_labels.append(
-                    self.attr.color_articleType_to_id[row['articleType']]
+                    self.attr.article_name_to_id[row['articleType']]
                 )
     
     def __len__(self):
