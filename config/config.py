@@ -1,4 +1,5 @@
 import torch
+import os
 from torchvision import transforms
 mean = [0.485, 0.456, 0.406]
 std = [0.229, 0.224, 0.225]
@@ -19,3 +20,11 @@ val_transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize(mean, std)
 ])
+
+# FOR TRAINING SETTINGS
+
+NUM_EPOCHS = 50
+BATCH_SIZES = 16
+NUM_WORKERS = os.cpu_count()
+DEVICE = torch.device(
+    'cuda:0') if torch.cuda.is_available() else torch.device('cpu')
